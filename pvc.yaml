@@ -1,0 +1,26 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    strimzi.io/delete-claim: 'false'
+    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+  selfLink: /api/v1/namespaces/my-kafka/persistentvolumeclaims/data-my-cluster-kafka-0
+  resourceVersion: '42035'
+  name: data-my-cluster-kafka-0
+  #namespace: kafka
+  finalizers:
+    - kubernetes.io/pvc-protection
+  labels:
+    strimzi.io/cluster: my-cluster
+    strimzi.io/kind: Kafka
+    strimzi.io/name: my-cluster-kafka
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: hostpath
+  
