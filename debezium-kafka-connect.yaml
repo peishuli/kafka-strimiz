@@ -1,0 +1,19 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaConnect
+metadata:
+  name: my-connect
+spec:
+  version: 2.4.0
+  replicas: 1
+  bootstrapServers: my-cluster-kafka-bootstrap:9093
+  image: strimzi/kafka:0.16.2-kafka-2.4.0 #peishu/debezium-sqlserver-connector:v0.9.0
+  tls:
+    trustedCertificates:
+      - secretName: my-cluster-cluster-ca-cert
+        certificate: ca.crt   
+  config:
+    group.id: my-connect-cluster-debezium
+    offset.storage.topic: my-connect-cluster-offsets
+    config.storage.topic: my-connect-cluster-configs
+    status.storage.topic: my-connect-cluster-status
+  

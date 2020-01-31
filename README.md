@@ -4,14 +4,14 @@ If you wanted persistence, you will have to create a PersistentVolumeClaim (PVC)
 
 Alternatively, set spec.kafka.storage.type to ephemeral
 
-## To Set It Up
+## Install Strimzi k8s operator and depoy the sample kafka cluster (CR)
 
 ```
-k craete ns kafka
-k apply -f pvc
+helm install strimzi/strimzi-kafka-operator
+kubectl apply -f ./examples/kafka-ephemeral.yaml
+kubectl apply -f ./examples/source-connector.yaml
+kubectl apply -f ./examples/kafka-connect.yaml
+kubectl apply -f debezium-kafka-connect.yaml
+
+watch -n 1 kubectl get po -n kafka
 ```
-
-## Reference
-
-- [Quick Starts on Minikube](https://strimzi.io/quickstarts/minikube/)
-- [Setup Kafka](https://robertbrem.github.io/Microservices_with_Kubernetes/19_CQRS_with_Kafka/01_Setup_Kafka/)
