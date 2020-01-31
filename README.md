@@ -7,6 +7,7 @@ Alternatively, set spec.kafka.storage.type to ephemeral
 ## Install Strimzi k8s operator and depoy the sample kafka cluster (CR)
 
 ```
+helm repo add strimzi https://strimzi.io/charts/
 helm install strimzi/strimzi-kafka-operator
 kubectl apply -f ./examples/kafka-ephemeral.yaml
 kubectl apply -f ./examples/source-connector.yaml
