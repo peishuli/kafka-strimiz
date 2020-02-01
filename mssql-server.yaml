@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqlserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: sqlserver
+  template:
+    metadata:
+      labels:
+        service: sqlserver
+    spec:
+      containers:
+      - name: sqlserver
+        image: microsoft/mssql-server-linux:2017-CU9-GDR2
+        ports:
+          - containerPort: 1433
+        env:
+        - name: MSSQL_SA_PASSWORD
+          value: Password!
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: Developer
+        - name: MSSQL_AGENT_ENABLED
+          value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqlserver
+  labels:
+    service: sqlserver
+spec:
+  ports:
+  - name: "1433"
+    port: 1433
+    targetPort: 1433
+  type: LoadBalancer
+  selector:
+    service: sqlserver
