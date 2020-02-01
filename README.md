@@ -28,4 +28,22 @@ cat db-scripts.sql | kubectl exec -it sqlserver-69f78d47f-6zxbs -- /bin/bash -c 
 cat register-sqlserver.json | kubectl exec -i my-cluster-kafka-0 -- curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://my-connect-connect-api:8083/connectors -d @-
 
 kubectl exec -i my-cluster-kafka-0 -- curl -X GET http://my-connect-connect-api:8083/connectors
+
+# After the connector instance is registered, the cdc topics should be automatically created and can be displayed with the following command (view available topics)
+kubectl exec my-cluster-kafka-0 -- bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+# monitory the cdc topics
+kubectl exec -i my-cluster-kafka-0 -- bin/kafka-console-consumer.sh \
+--bootstrap-server my-cluster-kafka-bootstrap:9092 \
+--from-beginning \
+--property print.key=true \
+--topic server1.dbo.customers
+
+# view connectors
+kubectl exec -i my-cluster-kafka-0 -- curl -X GET http://my-connect-connect-api:8083/connectors
+	
+	
+# run sql statements
+kubectl exec -it sqlserver-69f78d47f-bfbq9 -- /bin/bash -c '/opt/mssql-tools/bin/sqlcmd -U sa -P Password!'
+
 ```

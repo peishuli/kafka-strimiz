@@ -12,7 +12,7 @@ spec:
       - secretName: my-cluster-cluster-ca-cert
         certificate: ca.crt   
   config:
-    group.id: my-connect-cluster-debezium
+    group.id: 1 #my-connect-cluster-debezium
     offset.storage.topic: my-connect-cluster-offsets
     config.storage.topic: my-connect-cluster-configs
     status.storage.topic: my-connect-cluster-status
